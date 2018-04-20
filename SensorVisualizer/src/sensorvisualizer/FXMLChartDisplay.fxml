@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1200.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sensorvisualizer.FXMLChartDisplayController">
+    <children>
+        <Button fx:id="generateRandomData" layoutX="768.0" layoutY="600.0" onAction="#generateRandomDataHandler" text="Generate random data" />
+        <Label fx:id="label" layoutX="126" layoutY="120" minHeight="16" minWidth="69" />
+      <LineChart fx:id="temperatureChart" layoutX="46.0" layoutY="111.0" prefHeight="400.0" prefWidth="722.0">
+        <xAxis>
+          <NumberAxis side="BOTTOM" />
+        </xAxis>
+        <yAxis>
+          <NumberAxis side="LEFT" />
+        </yAxis>
+      </LineChart>
+      <Label layoutX="679.0" layoutY="14.0" text="Sensor Visualizer">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <LineChart fx:id="heartBeatChart" layoutX="857.0" layoutY="111.0" prefHeight="400.0" prefWidth="722.0">
+         <xAxis>
+            <NumberAxis side="BOTTOM" />
+         </xAxis>
+         <yAxis>
+            <NumberAxis side="LEFT" />
+         </yAxis>
+      </LineChart>
+    </children>
+</AnchorPane>
