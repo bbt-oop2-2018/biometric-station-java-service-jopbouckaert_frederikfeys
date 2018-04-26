@@ -17,11 +17,12 @@ public class BioMetricStationMqttDataTranslator {
     public static void main(String[] args) throws InterruptedException {
         MqttStringGenerator mqttStringGenerator = new MqttStringGenerator();
         String data;
+        
         do{
         data = mqttStringGenerator.MqttStringGenerator();
         mqttStringGenerator.sendMqttData(data);
         System.out.println(data);
-        Thread.sleep(1000);
+        Thread.sleep(300);
         }while(true);
     }
     
