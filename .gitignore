@@ -2,3 +2,7 @@
 /BioMetricStationMqttDataTranslator/build/
 /BioMetricStationService/build/
 /BioMetricStationService/dist/
+/BioMetricStationDataReceiverSerial/nbproject/private/
+/BioMetricStationDataReceiverSerial/build/
+/BioMetricStationSerialReceiver/nbproject/private/
+/BioMetricStationSerialReceiver/build/
