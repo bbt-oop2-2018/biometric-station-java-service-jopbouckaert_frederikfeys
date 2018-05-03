@@ -36,12 +36,28 @@ public class MqttStringGenerator {
     }
     
     public String MqttStringGenerator(){
-    temperatureData.generate();
-    heartBeatData.generate();
-    xAccelero.generate();
-    yAccelero.generate();
-    zAccelero.generate();
     return ("ABCDE" + temperatureData + "|" + heartBeatData + "XXX" + xAccelero + "YYY" + yAccelero + "ZZZ" + zAccelero + "EDCBA");
+    }
+    
+    
+    public double getTemperature(){
+        return temperatureData.generate();
+    }
+    
+    public double getHeartbeat(){
+        return heartBeatData.generate();
+    }
+        
+    public double getXAccelero(){
+        return xAccelero.generate();
+    }
+            
+    public double getYAccelero(){
+        return yAccelero.generate();
+    }
+    
+    public double getZAccelero(){
+        return zAccelero.generate();
     }
     
     public void sendMqttData(String mqttData){

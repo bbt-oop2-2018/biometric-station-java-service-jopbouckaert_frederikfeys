@@ -29,6 +29,7 @@
 package biometricstationserialreceiver;
 
 import biometricstationservice.MqttBiometricStationService;
+import com.google.gson.Gson;
 
 /**
  *
@@ -39,7 +40,7 @@ public class BioMetricStationSerialReceiver {
     public static void main(String[] args) throws Exception {
         
         MqttBiometricStationService biometricStationService = new MqttBiometricStationService("jop", "test");
-
+        Gson gson = new Gson();
 //        MqttStringGenerator mqttStringGenerator = new MqttStringGenerator();
 //        String data;
         // First create an object of SerialLineReceiver using the non-default constructor
@@ -58,6 +59,10 @@ public class BioMetricStationSerialReceiver {
             @Override
             public void serialLineEvent(SerialData data) {
                 System.out.println("Received data from the serial port: " + data.getDataAsString());
+                BioMetricStationStringParser parsedData = new BioMetricStationStringParser();
+                SensorData sensordata;
+                sensordata = parsedData.parse(data.getDataAsString());
+                String DataJson = gson.toJson(sensordata);
                 biometricStationService.sendMqttData(data.getDataAsString());
             }
         });
