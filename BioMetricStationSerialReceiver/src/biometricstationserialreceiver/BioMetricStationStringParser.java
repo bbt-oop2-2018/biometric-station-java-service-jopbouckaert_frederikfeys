@@ -22,22 +22,26 @@ public class BioMetricStationStringParser {
         int xAcceleroStart = dataString.indexOf("XXX");
         int yAcceleroStart = dataString.indexOf("YYY");
         int zAcceleroStart = dataString.indexOf("ZZZ");
-        int zAcceleroEnd = dataString.indexOf("EDCBA");
+        int checksumStart = dataString.indexOf("CCC");
+        int checksumEnd = dataString.indexOf("EDCBA");
         String temperatureString = dataString.substring(temperatureStart+5,heartBeatStart);
         String heartBeatString = dataString.substring(heartBeatStart +1,xAcceleroStart);
         String xAcceleroString = dataString.substring(xAcceleroStart +3,yAcceleroStart);
         String yAcceleroString = dataString.substring(yAcceleroStart +3,zAcceleroStart);
-        String zAcceleroString = dataString.substring(zAcceleroStart +3,zAcceleroEnd);
-
+        String zAcceleroString = dataString.substring(zAcceleroStart +3,checksumStart);
+        String checksumString = dataString.substring(checksumStart +3,checksumEnd);
+        
         double temperature = Double.parseDouble(temperatureString);
         double heartBeat = Double.parseDouble(heartBeatString);
         double xAccelero = Double.parseDouble(xAcceleroString);
         double yAccelero = Double.parseDouble(yAcceleroString);
         double zAccelero = Double.parseDouble(zAcceleroString);
-
-        return new SensorData(temperature, heartBeat, xAccelero, yAccelero, zAccelero);
+        double checksum = Double.parseDouble(checksumString);
         
-        
+        if(temperature +heartBeat+ xAccelero+yAccelero+zAccelero == checksum){
+            return new SensorData(temperature, heartBeat, xAccelero, yAccelero, zAccelero);
+        }
+            return null;
         }
 
     }
@@ -48,7 +52,8 @@ public class BioMetricStationStringParser {
                 && dataString.indexOf("XXX") != -1
                 && dataString.indexOf("YYY") != -1
                 && dataString.indexOf("ZZZ") != -1
-                && dataString.indexOf("|") != -1);
+                && dataString.indexOf("|") != -1
+                && dataString.indexOf("CCC") != -1);
     }
 
 }
