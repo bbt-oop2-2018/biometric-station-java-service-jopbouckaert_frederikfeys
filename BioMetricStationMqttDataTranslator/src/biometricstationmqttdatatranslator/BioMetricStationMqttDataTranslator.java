@@ -5,6 +5,7 @@
  */
 package biometricstationmqttdatatranslator;
 
+import biometricstationservice.MqttBiometricStationService;
 import com.google.gson.Gson;
 
 /**
@@ -19,21 +20,38 @@ public class BioMetricStationMqttDataTranslator {
     public static void main(String[] args) throws InterruptedException {
         Gson gson = new Gson();
         MqttStringGenerator mqttStringGenerator = new MqttStringGenerator();
+        MqttBiometricStationService biometricStationService = new MqttBiometricStationService("jop", "jopfrederik");
         String data;
-        
-        
-        do{
-        SensorData sensordata = new SensorData(mqttStringGenerator.getTemperature(),
-                                    mqttStringGenerator.getHeartbeat(),
-                                    mqttStringGenerator.getXAccelero(),
-                                    mqttStringGenerator.getYAccelero(),
-                                    mqttStringGenerator.getZAccelero());
-        
-        String DataJson = gson.toJson(sensordata);
-        mqttStringGenerator.sendMqttData(DataJson);
-        System.out.println(DataJson);
-        Thread.sleep(300);
-        }while(true);
+
+        do {
+            
+                SensorDataTemperature sensordatatemperature;
+                SensorDataHeartbeat sensordataheartbeat;
+                SensorDataAccelero sensordataaccelero;
+            SensorData sensordata = new SensorData(mqttStringGenerator.getTemperature(),
+                    mqttStringGenerator.getHeartbeat(),
+                    mqttStringGenerator.getXAccelero(),
+                    mqttStringGenerator.getYAccelero(),
+                    mqttStringGenerator.getZAccelero());
+            
+                sensordatatemperature = new SensorDataTemperature(sensordata.getTemperature());
+                sensordataheartbeat = new SensorDataHeartbeat(sensordata.getHeartBeat());
+                sensordataaccelero = new SensorDataAccelero(sensordata.getXAcellero(),sensordata.getYAcellero(),sensordata.getZAcellero());
+            
+            String temperatureJson = gson.toJson(sensordatatemperature);
+            String heartbeaetJson = gson.toJson(sensordataheartbeat);
+            String acceleroJson = gson.toJson(sensordataaccelero);
+            biometricStationService.switchChannel("temperature");
+            biometricStationService.sendMqttData(temperatureJson);
+            System.out.println("Sent on MQTT: " + temperatureJson);
+            biometricStationService.switchChannel("heartbeat");
+            biometricStationService.sendMqttData(heartbeaetJson);
+            System.out.println("Sent on MQTT: " + heartbeaetJson);
+            biometricStationService.switchChannel("accelero");
+            biometricStationService.sendMqttData(acceleroJson);
+            System.out.println("Sent on MQTT: " + acceleroJson);
+            Thread.sleep(500);
+        } while (true);
     }
-    
+
 }

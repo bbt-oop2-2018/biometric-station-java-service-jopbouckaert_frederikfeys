@@ -20,7 +20,7 @@ public class MqttBiometricStationService implements MqttCallback {
     private MqttConnectOptions connectionOptions;
     private IMqttMessageHandler messageHandler = null;
     
-    private final String BASE_TOPIC = "biometricstationjopfrederik";
+    private final String BASE_TOPIC = "biometricstation/jopfrederik";
     private String channelName;
     private String channelTopic;
     
