@@ -66,9 +66,11 @@ public class BioMetricStationSerialReceiver {
 
                 System.out.println("Received data from the serial port: " + data.getDataAsString());
                 sensordata = parsedData.parse(data.getDataAsString());
+                if (!(sensordata == null)){
                 sensordatatemperature = new SensorDataTemperature(sensordata.getTemperature());
                 sensordataheartbeat = new SensorDataHeartbeat(sensordata.getHeartBeat());
-                sensordataaccelero = new SensorDataAccelero(sensordata.getXAcellero(),sensordata.getYAcellero(),sensordata.getZAcellero());        
+                sensordataaccelero = new SensorDataAccelero(sensordata.getXAcellero(),sensordata.getYAcellero(),sensordata.getZAcellero());
+                
                 String temperatureJson = gson.toJson(sensordatatemperature);
                 String heartbeaetJson = gson.toJson(sensordataheartbeat);
                 String acceleroJson = gson.toJson(sensordataaccelero);
@@ -80,7 +82,9 @@ public class BioMetricStationSerialReceiver {
                 System.out.println("Sent on MQTT: " + heartbeaetJson);
                 biometricStationService.switchChannel("accelero");
                 biometricStationService.sendMqttData(acceleroJson);
-                System.out.println("Sent on MQTT: " + acceleroJson);
+                System.out.println("Sent on MQTT: " + acceleroJson); 
+                }
+                
             }
         });
     }
