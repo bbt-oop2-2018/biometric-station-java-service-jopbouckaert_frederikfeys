@@ -30,6 +30,9 @@ package biometricstationserialreceiver;
 
 import biometricstationservice.MqttBiometricStationService;
 import com.google.gson.Gson;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  *
@@ -42,6 +45,7 @@ public class BioMetricStationSerialReceiver {
         MqttBiometricStationService biometricStationService = new MqttBiometricStationService("jopfrederik", "jopfrederik");
         Gson gson = new Gson();
         BioMetricStationStringParser parsedData = new BioMetricStationStringParser();
+
         
 //        String data;
         // First create an object of SerialLineReceiver using the non-default constructor
@@ -63,13 +67,15 @@ public class BioMetricStationSerialReceiver {
                 SensorDataTemperature sensordatatemperature;
                 SensorDataHeartbeat sensordataheartbeat;
                 SensorDataAccelero sensordataaccelero;
+                DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
+                Date dateTime;
 
                 System.out.println("Received data from the serial port: " + data.getDataAsString());
                 sensordata = parsedData.parse(data.getDataAsString());
                 if (!(sensordata == null)){
-                sensordatatemperature = new SensorDataTemperature(sensordata.getTemperature());
-                sensordataheartbeat = new SensorDataHeartbeat(sensordata.getHeartBeat());
-                sensordataaccelero = new SensorDataAccelero(sensordata.getXAcellero(),sensordata.getYAcellero(),sensordata.getZAcellero());
+                sensordatatemperature = new SensorDataTemperature(sensordata.getTemperature(),dateFormat.format(dateTime = new Date()));
+                sensordataheartbeat = new SensorDataHeartbeat(sensordata.getHeartBeat(),dateFormat.format(dateTime = new Date()));
+                sensordataaccelero = new SensorDataAccelero(sensordata.getXAcellero(),sensordata.getYAcellero(),sensordata.getZAcellero(),dateFormat.format(dateTime = new Date()));
                 
                 String temperatureJson = gson.toJson(sensordatatemperature);
                 String heartbeaetJson = gson.toJson(sensordataheartbeat);

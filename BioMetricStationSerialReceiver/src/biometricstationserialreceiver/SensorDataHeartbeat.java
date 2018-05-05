@@ -5,6 +5,8 @@
  */
 package biometricstationserialreceiver;
 
+import java.util.Date;
+
 /**
  *
  * @author jopbo_000
@@ -12,14 +14,20 @@ package biometricstationserialreceiver;
 public class SensorDataHeartbeat {
     
     private double heartbeat;
+    private String dateTime;
     
-    public SensorDataHeartbeat(double heartbeat){
-        
+    public SensorDataHeartbeat(double heartbeat,String dateTime){
+     
         this.heartbeat = heartbeat;
+        this.dateTime = dateTime;
     }
     
     public double getHeartbeat(){
         return heartbeat;
+    }
+    
+    public String getDateTime(){
+        return dateTime;
     }
     
 }

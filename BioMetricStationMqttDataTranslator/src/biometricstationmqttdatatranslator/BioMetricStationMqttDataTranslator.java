@@ -7,6 +7,9 @@ package biometricstationmqttdatatranslator;
 
 import biometricstationservice.MqttBiometricStationService;
 import com.google.gson.Gson;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  *
@@ -21,6 +24,8 @@ public class BioMetricStationMqttDataTranslator {
         Gson gson = new Gson();
         MqttStringGenerator mqttStringGenerator = new MqttStringGenerator();
         MqttBiometricStationService biometricStationService = new MqttBiometricStationService("jop", "jopfrederik");
+        DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
+        Date dateTime;
         String data;
 
         do {
@@ -34,9 +39,9 @@ public class BioMetricStationMqttDataTranslator {
                     mqttStringGenerator.getYAccelero(),
                     mqttStringGenerator.getZAccelero());
             
-                sensordatatemperature = new SensorDataTemperature(sensordata.getTemperature());
-                sensordataheartbeat = new SensorDataHeartbeat(sensordata.getHeartBeat());
-                sensordataaccelero = new SensorDataAccelero(sensordata.getXAcellero(),sensordata.getYAcellero(),sensordata.getZAcellero());
+                sensordatatemperature = new SensorDataTemperature(sensordata.getTemperature(),dateFormat.format(dateTime = new Date()));
+                sensordataheartbeat = new SensorDataHeartbeat(sensordata.getHeartBeat(),dateFormat.format(dateTime = new Date()));
+                sensordataaccelero = new SensorDataAccelero(sensordata.getXAcellero(),sensordata.getYAcellero(),sensordata.getZAcellero(),dateFormat.format(dateTime = new Date()));
             
             String temperatureJson = gson.toJson(sensordatatemperature);
             String heartbeaetJson = gson.toJson(sensordataheartbeat);
