@@ -55,7 +55,7 @@ public class BioMetricStationMqttDataTranslator {
             biometricStationService.switchChannel("accelero");
             biometricStationService.sendMqttData(acceleroJson);
             System.out.println("Sent on MQTT: " + acceleroJson);
-            Thread.sleep(500);
+            Thread.sleep(200);
         } while (true);
     }
 
