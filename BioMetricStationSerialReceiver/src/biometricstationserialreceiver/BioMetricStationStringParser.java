@@ -15,33 +15,35 @@ public class BioMetricStationStringParser {
 
         if (!isValidString(dataString)) {
             return null;
-        }else{
+        } else {
 
-        int temperatureStart = dataString.indexOf("ABCDE");
-        int heartBeatStart = dataString.indexOf("|");
-        int xAcceleroStart = dataString.indexOf("XXX");
-        int yAcceleroStart = dataString.indexOf("YYY");
-        int zAcceleroStart = dataString.indexOf("ZZZ");
-        int checksumStart = dataString.indexOf("CCC");
-        int checksumEnd = dataString.indexOf("EDCBA");
-        String temperatureString = dataString.substring(temperatureStart+5,heartBeatStart);
-        String heartBeatString = dataString.substring(heartBeatStart +1,xAcceleroStart);
-        String xAcceleroString = dataString.substring(xAcceleroStart +3,yAcceleroStart);
-        String yAcceleroString = dataString.substring(yAcceleroStart +3,zAcceleroStart);
-        String zAcceleroString = dataString.substring(zAcceleroStart +3,checksumStart);
-        String checksumString = dataString.substring(checksumStart +3,checksumEnd);
-        
-        double temperature = Double.parseDouble(temperatureString);
-        double heartBeat = Double.parseDouble(heartBeatString);
-        double xAccelero = Double.parseDouble(xAcceleroString);
-        double yAccelero = Double.parseDouble(yAcceleroString);
-        double zAccelero = Double.parseDouble(zAcceleroString);
-        double checksum = Double.parseDouble(checksumString);
-        
-        if(temperature +heartBeat+ xAccelero+yAccelero+zAccelero == checksum){
-            return new SensorData(temperature, heartBeat, xAccelero, yAccelero, zAccelero);
-        }
-            return null;
+            int temperatureStart = dataString.indexOf("ABCDE");
+            int heartBeatStart = dataString.indexOf("|");
+            int xAcceleroStart = dataString.indexOf("XXX");
+            int yAcceleroStart = dataString.indexOf("YYY");
+            int zAcceleroStart = dataString.indexOf("ZZZ");
+            int checksumStart = dataString.indexOf("CCC");
+            int checksumEnd = dataString.indexOf("EDCBA");
+            String temperatureString = dataString.substring(temperatureStart + 5, heartBeatStart);
+            String heartBeatString = dataString.substring(heartBeatStart + 1, xAcceleroStart);
+            String xAcceleroString = dataString.substring(xAcceleroStart + 3, yAcceleroStart);
+            String yAcceleroString = dataString.substring(yAcceleroStart + 3, zAcceleroStart);
+            String zAcceleroString = dataString.substring(zAcceleroStart + 3, checksumStart);
+            String checksumString = dataString.substring(checksumStart + 3, checksumEnd);
+
+            double temperature = Double.parseDouble(temperatureString);
+            double heartBeat = Double.parseDouble(heartBeatString);
+            double xAccelero = Double.parseDouble(xAcceleroString);
+            double yAccelero = Double.parseDouble(yAcceleroString);
+            double zAccelero = Double.parseDouble(zAcceleroString);
+            double checksum = Double.parseDouble(checksumString);
+
+            if (temperature + heartBeat + xAccelero + yAccelero + zAccelero == checksum) {
+                return new SensorData(temperature, heartBeat, xAccelero, yAccelero, zAccelero);
+
+            } else {
+                return null;
+            }
         }
 
     }
