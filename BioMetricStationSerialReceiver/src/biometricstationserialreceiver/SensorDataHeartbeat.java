@@ -5,7 +5,6 @@
  */
 package biometricstationserialreceiver;
 
-import java.util.Date;
 
 /**
  *

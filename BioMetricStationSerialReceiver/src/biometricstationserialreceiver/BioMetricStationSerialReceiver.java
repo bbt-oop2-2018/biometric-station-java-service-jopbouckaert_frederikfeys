@@ -28,6 +28,7 @@
  */
 package biometricstationserialreceiver;
 
+import allthingsservice.AllThingsService;
 import biometricstationservice.MqttBiometricStationService;
 import com.google.gson.Gson;
 import java.text.DateFormat;
@@ -43,23 +44,12 @@ public class BioMetricStationSerialReceiver {
     public static void main(String[] args) throws Exception {
         
         MqttBiometricStationService biometricStationService = new MqttBiometricStationService("jopfrederik", "jopfrederik");
+        AllThingsService dashboard = new AllThingsService();
         Gson gson = new Gson();
         BioMetricStationStringParser parsedData = new BioMetricStationStringParser();
-
-        
-//        String data;
-        // First create an object of SerialLineReceiver using the non-default constructor
-        // 0 or 1 = index of com port (not the COM number from windows!)
-        // 9600 = baudrate
-        // false = debugging, set to true to see more messages in the console
         SerialLineReceiver receiver = new SerialLineReceiver(0, 115200, false);
         
-        // To receive data from the serial port device you need to register a listener.
-        // This is an instance of SerialPortLineListener that has a method serialLineEvent().
-        // This method is called from inside SerialLineReceiver every time the serial port
-        // received a data stream that contains a newline (\n).
-        // The data is past using an object of type SerialData. You can access the data as a String
-        // or as an array of bytes.
+        
         receiver.setLineListener(new SerialPortLineListener() {
             @Override
             public void serialLineEvent(SerialData data) {
@@ -76,6 +66,11 @@ public class BioMetricStationSerialReceiver {
                 sensordatatemperature = new SensorDataTemperature(sensordata.getTemperature(),dateFormat.format(dateTime = new Date()));
                 sensordataheartbeat = new SensorDataHeartbeat(sensordata.getHeartBeat(),dateFormat.format(dateTime = new Date()));
                 sensordataaccelero = new SensorDataAccelero(sensordata.getXAcellero(),sensordata.getYAcellero(),sensordata.getZAcellero(),dateFormat.format(dateTime = new Date()));
+                dashboard.set("temperature", sensordata.getTemperature());
+                dashboard.set("heartbeat", sensordata.getHeartBeat());
+                dashboard.set("Xaccelero", sensordata.getXAcellero());
+                dashboard.set("Yaccelero", sensordata.getYAcellero());
+                dashboard.set("Zaccelero", sensordata.getZAcellero());
                 
                 String temperatureJson = gson.toJson(sensordatatemperature);
                 String heartbeaetJson = gson.toJson(sensordataheartbeat);

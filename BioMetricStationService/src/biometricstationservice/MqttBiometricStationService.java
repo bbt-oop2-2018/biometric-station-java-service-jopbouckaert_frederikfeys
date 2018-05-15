@@ -11,13 +11,22 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
+
+
 public class MqttBiometricStationService implements MqttCallback {
+  
+    
+
+
+    
+    
     private MqttClient client;
     private String broker = "tcp://labict.be:1883";
     private String clientId;
     private int qos = 2;            // Exactly once
     private MemoryPersistence persistence;
     private MqttConnectOptions connectionOptions;
+    private MqttConnectOptions connectionOptionsAllThingsTalk;
     private IMqttMessageHandler messageHandler = null;
     
     private final String BASE_TOPIC = "biometricstation/jopfrederik";
@@ -38,10 +47,12 @@ public class MqttBiometricStationService implements MqttCallback {
     
     private void setupMqtt() {
         try {
+            
             persistence = new MemoryPersistence();
             client = new MqttClient(broker, clientId, persistence);
             connectionOptions = new MqttConnectOptions();
             connectionOptions.setCleanSession(true);
+            
             client.connect(connectionOptions);
             client.setCallback(this);
             client.subscribe(channelTopic);

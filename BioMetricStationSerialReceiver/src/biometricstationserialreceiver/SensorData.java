@@ -17,12 +17,9 @@ public class SensorData {
     private double xAccelero;
     private double yAccelero;
     private double zAccelero;
-//    int all[]={0,0,0,0,0,0,0,0,0,0};
-//    ArrayList<int[]> value = new ArrayList<int[]>();
     
     public SensorData(double temperature , double heartBeat , double xAccelero , double yAccelero , double zAccelero){
         
-//        value.add(0,all);
         this.temperature = temperature;
         this.heartBeat = heartBeat;
         this.xAccelero = xAccelero;
