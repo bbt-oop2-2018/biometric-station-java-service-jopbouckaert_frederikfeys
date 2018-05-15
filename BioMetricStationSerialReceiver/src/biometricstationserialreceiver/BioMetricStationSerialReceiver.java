@@ -1,31 +1,3 @@
-///*
-// * To change this license header, choose License Headers in Project Properties.
-// * To change this template file, choose Tools | Templates
-// * and open the template in the editor.
-// */
-//package biometricstationserialreceiver;
-//
-///**
-// *
-// * @author jopbo_000
-// */
-//public class BioMetricStationSerialReceiver {
-//
-//    /**
-//     * @param args the command line arguments
-//     */
-//    public static void main(String[] args) {
-//        // TODO code application logic here
-//    }
-//    
-//}
-
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package biometricstationserialreceiver;
 
 import allthingsservice.AllThingsService;
@@ -38,6 +10,7 @@ import java.util.Date;
 /**
  *
  * @author nicod
+ * @author jopbo_000
  */
 public class BioMetricStationSerialReceiver {
 
@@ -66,11 +39,11 @@ public class BioMetricStationSerialReceiver {
                 sensordatatemperature = new SensorDataTemperature(sensordata.getTemperature(),dateFormat.format(dateTime = new Date()));
                 sensordataheartbeat = new SensorDataHeartbeat(sensordata.getHeartBeat(),dateFormat.format(dateTime = new Date()));
                 sensordataaccelero = new SensorDataAccelero(sensordata.getXAcellero(),sensordata.getYAcellero(),sensordata.getZAcellero(),dateFormat.format(dateTime = new Date()));
-                dashboard.setTemperature("temperature", sensordata.getTemperature());
-                dashboard.setHeartbeat("heartbeat", sensordata.getHeartBeat());
-                dashboard.setAccelero("Xaccelero", sensordata.getXAcellero());
-                dashboard.setAccelero("Yaccelero", sensordata.getYAcellero());
-                dashboard.setAccelero("Zaccelero", sensordata.getZAcellero());
+                dashboard.set("temperature", sensordata.getTemperature());
+                dashboard.set("heartbeat", sensordata.getHeartBeat());
+                dashboard.set("Xaccelero", sensordata.getXAcellero());
+                dashboard.set("Yaccelero", sensordata.getYAcellero());
+                dashboard.set("Zaccelero", sensordata.getZAcellero());
                 
                 String temperatureJson = gson.toJson(sensordatatemperature);
                 String heartbeaetJson = gson.toJson(sensordataheartbeat);

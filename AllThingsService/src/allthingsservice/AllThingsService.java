@@ -33,27 +33,9 @@ public class AllThingsService implements MqttCallback{
     public AllThingsService() {
         setupMqttClient();
     }
-    public void setTemperature(String name, double state) {
+    public void set(String name, double state) {
         String topic = "device/" + deviceId + "/asset/" + name + "/state";
-        //String value = (state ? "true" : "false");
-        String payload = "{\"value\":" + "\"" + state + " °C" +"\"}";
-        System.out.println(payload);
-        publish(payload, topic);
-    }
-    
-    public void setHeartbeat(String name, double state) {
-        String topic = "device/" + deviceId + "/asset/" + name + "/state";
-        //String value = (state ? "true" : "false");
-        String payload = "{\"value\":" + "\"" + state + " BPM" +"\"}";
-        System.out.println(payload);
-        publish(payload, topic);
-    }
-    
-    public void setAccelero(String name, double state) {
-        String topic = "device/" + deviceId + "/asset/" + name + "/state";
-        //String value = (state ? "true" : "false");
         String payload = "{\"value\":" + "\"" + state +"\"}";
-        System.out.println(payload);
         publish(payload, topic);
     }
         
