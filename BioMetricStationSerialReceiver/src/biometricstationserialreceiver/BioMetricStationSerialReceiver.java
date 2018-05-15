@@ -66,11 +66,11 @@ public class BioMetricStationSerialReceiver {
                 sensordatatemperature = new SensorDataTemperature(sensordata.getTemperature(),dateFormat.format(dateTime = new Date()));
                 sensordataheartbeat = new SensorDataHeartbeat(sensordata.getHeartBeat(),dateFormat.format(dateTime = new Date()));
                 sensordataaccelero = new SensorDataAccelero(sensordata.getXAcellero(),sensordata.getYAcellero(),sensordata.getZAcellero(),dateFormat.format(dateTime = new Date()));
-                dashboard.set("temperature", sensordata.getTemperature());
-                dashboard.set("heartbeat", sensordata.getHeartBeat());
-                dashboard.set("Xaccelero", sensordata.getXAcellero());
-                dashboard.set("Yaccelero", sensordata.getYAcellero());
-                dashboard.set("Zaccelero", sensordata.getZAcellero());
+                dashboard.setTemperature("temperature", sensordata.getTemperature());
+                dashboard.setHeartbeat("heartbeat", sensordata.getHeartBeat());
+                dashboard.setAccelero("Xaccelero", sensordata.getXAcellero());
+                dashboard.setAccelero("Yaccelero", sensordata.getYAcellero());
+                dashboard.setAccelero("Zaccelero", sensordata.getZAcellero());
                 
                 String temperatureJson = gson.toJson(sensordatatemperature);
                 String heartbeaetJson = gson.toJson(sensordataheartbeat);
