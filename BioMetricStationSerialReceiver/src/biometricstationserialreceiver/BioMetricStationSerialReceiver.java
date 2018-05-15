@@ -15,14 +15,13 @@ import java.util.Date;
 public class BioMetricStationSerialReceiver {
 
     public static void main(String[] args) throws Exception {
-        
+
         MqttBiometricStationService biometricStationService = new MqttBiometricStationService("jopfrederik", "jopfrederik");
         AllThingsService dashboard = new AllThingsService();
         Gson gson = new Gson();
         BioMetricStationStringParser parsedData = new BioMetricStationStringParser();
         SerialLineReceiver receiver = new SerialLineReceiver(0, 115200, false);
-        
-        
+
         receiver.setLineListener(new SerialPortLineListener() {
             @Override
             public void serialLineEvent(SerialData data) {
@@ -35,32 +34,37 @@ public class BioMetricStationSerialReceiver {
 
                 System.out.println("Received data from the serial port: " + data.getDataAsString());
                 sensordata = parsedData.parse(data.getDataAsString());
-                if (!(sensordata == null)){
-                sensordatatemperature = new SensorDataTemperature(sensordata.getTemperature(),dateFormat.format(dateTime = new Date()));
-                sensordataheartbeat = new SensorDataHeartbeat(sensordata.getHeartBeat(),dateFormat.format(dateTime = new Date()));
-                sensordataaccelero = new SensorDataAccelero(sensordata.getXAcellero(),sensordata.getYAcellero(),sensordata.getZAcellero(),dateFormat.format(dateTime = new Date()));
-                dashboard.set("temperature", sensordata.getTemperature());
-                dashboard.set("heartbeat", sensordata.getHeartBeat());
-                dashboard.set("Xaccelero", sensordata.getXAcellero());
-                dashboard.set("Yaccelero", sensordata.getYAcellero());
-                dashboard.set("Zaccelero", sensordata.getZAcellero());
-                
-                String temperatureJson = gson.toJson(sensordatatemperature);
-                String heartbeaetJson = gson.toJson(sensordataheartbeat);
-                String acceleroJson = gson.toJson(sensordataaccelero);
-                biometricStationService.switchChannel("temperature");
-                biometricStationService.sendMqttData(temperatureJson);
-                System.out.println("Sent on MQTT: " + temperatureJson);
-                biometricStationService.switchChannel("heartbeat");
-                biometricStationService.sendMqttData(heartbeaetJson);
-                System.out.println("Sent on MQTT: " + heartbeaetJson);
-                biometricStationService.switchChannel("accelero");
-                biometricStationService.sendMqttData(acceleroJson);
-                System.out.println("Sent on MQTT: " + acceleroJson); 
+                if (!(sensordata == null)) {
+                    sensordatatemperature = new SensorDataTemperature(sensordata.getTemperature(),
+                            dateFormat.format(dateTime = new Date()));
+                    sensordataheartbeat = new SensorDataHeartbeat(sensordata.getHeartBeat(),
+                            dateFormat.format(dateTime = new Date()));
+                    sensordataaccelero = new SensorDataAccelero(sensordata.getXAcellero(),
+                            sensordata.getYAcellero(),
+                            sensordata.getZAcellero(),
+                            dateFormat.format(dateTime = new Date()));
+                    
+                    dashboard.set("temperature", sensordata.getTemperature());
+                    dashboard.set("heartbeat", sensordata.getHeartBeat());
+                    dashboard.set("Xaccelero", sensordata.getXAcellero());
+                    dashboard.set("Yaccelero", sensordata.getYAcellero());
+                    dashboard.set("Zaccelero", sensordata.getZAcellero());
+
+                    String temperatureJson = gson.toJson(sensordatatemperature);
+                    String heartbeaetJson = gson.toJson(sensordataheartbeat);
+                    String acceleroJson = gson.toJson(sensordataaccelero);
+                    biometricStationService.switchChannel("temperature");
+                    biometricStationService.sendMqttData(temperatureJson);
+                    System.out.println("Sent on MQTT: " + temperatureJson);
+                    biometricStationService.switchChannel("heartbeat");
+                    biometricStationService.sendMqttData(heartbeaetJson);
+                    System.out.println("Sent on MQTT: " + heartbeaetJson);
+                    biometricStationService.switchChannel("accelero");
+                    biometricStationService.sendMqttData(acceleroJson);
+                    System.out.println("Sent on MQTT: " + acceleroJson);
                 }
-                
+
             }
         });
     }
 }
-
